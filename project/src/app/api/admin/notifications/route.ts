@@ -56,9 +56,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     const body = await request.json().catch(() => ({}))
-    const ids = Array.isArray(body?.ids)
-      ? body.ids.map((id: unknown) => Number(id))
-      : null
+    const ids = Array.isArray(body?.ids) ? body.ids.map((id) => Number(id)) : null
     const markAll = body?.all === true
 
     if (!markAll && (!ids || ids.length === 0)) {

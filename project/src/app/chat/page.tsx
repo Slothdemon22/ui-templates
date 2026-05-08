@@ -349,12 +349,7 @@ export default function CommunityChatPage() {
                         <div className="absolute bottom-full right-0 mb-2 z-50 shadow-2xl rounded-xl overflow-hidden">
                           <EmojiPicker
                             onEmojiClick={onEmojiClick}
-                            theme={
-                              (typeof document !== 'undefined' &&
-                              document.documentElement.classList.contains('dark')
-                                ? 'dark'
-                                : 'light') as any
-                            }
+                            theme={typeof document !== 'undefined' && document.documentElement.classList.contains('dark') ? 'dark' : 'light'}
                             width={320}
                             height={400}
                           />

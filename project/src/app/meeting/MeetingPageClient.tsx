@@ -156,7 +156,7 @@ function MeetingPageContent() {
         return
       }
       const { hmsActions, hmsStore } = ref
-      const storeState = hmsStore.getState() as any
+      const storeState = hmsStore.getState((s: { hmsStates?: { localPeer?: { videoTrack?: { id?: string }; audioTrack?: { id?: string } } }; localPeer?: { videoTrack?: { id?: string }; audioTrack?: { id?: string } } }) => s)
       const localPeer = storeState?.hmsStates?.localPeer ?? storeState?.localPeer
       if (!localPeer) {
         retryCount++
@@ -224,6 +224,7 @@ function MeetingPageContent() {
   return (
     <div style={{ height: '100vh', position: 'relative' }}>
       <ErrorBoundary>
+        {/* @ts-expect-error - @100mslive/roomkit-react uses ref prop which triggers React 19 warning but is valid in React 18 */}
         <HMSPrebuilt
           ref={hmsRef}
           roomCode={roomCode}
@@ -234,7 +235,7 @@ function MeetingPageContent() {
               const ref = hmsRef.current
               if (ref?.hmsActions && ref?.hmsStore) {
                 const { hmsActions, hmsStore } = ref
-                const s = hmsStore.getState() as any
+                const s = hmsStore.getState((x: unknown) => x) as { hmsStates?: { localPeer?: { videoTrack?: { id?: string }; audioTrack?: { id?: string } } }; localPeer?: { videoTrack?: { id?: string }; audioTrack?: { id?: string } } }
                 const peer = s?.hmsStates?.localPeer ?? s?.localPeer
                 if (peer?.videoTrack?.id) hmsActions.setEnabledTrack(peer.videoTrack.id, true).catch(() => {})
                 if (peer?.audioTrack?.id) hmsActions.setEnabledTrack(peer.audioTrack.id, true).catch(() => {})

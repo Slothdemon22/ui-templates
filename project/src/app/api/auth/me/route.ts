@@ -39,7 +39,7 @@ export async function PATCH(req: NextRequest) {
   const { name, imageUrl } = body
 
   const data: { name?: string; imageUrl?: string | null } = {}
-  if (typeof name === 'string') data.name = name.trim() || undefined
+  if (typeof name === 'string') data.name = name.trim() || null
   if (imageUrl !== undefined) data.imageUrl = imageUrl === null || imageUrl === '' ? null : String(imageUrl)
 
   if (Object.keys(data).length === 0) {
